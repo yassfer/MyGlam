@@ -1,27 +1,44 @@
-$(document).ready(function() {
-    $("#myCarousel").on("slide.bs.carousel", function(e) {
-      var $e = $(e.relatedTarget);
-      var idx = $e.index();
-      var itemsPerSlide = 3;
-      var totalItems = $(".carousel-item").length;
+
+$.getJSON('https://cors.io/?http://api.myglamapp.pl/api/categories?language=EN&fbclid=IwAR0dPmCFoKrnBhsA5MUExn6oEm8Gxf1vPLQ4WUCzYNSWWRHruPZ4mK9shB8', function(file) {
+  console.log(file.data)
   
-      if (idx >= totalItems - (itemsPerSlide - 1)) {
-        var it = itemsPerSlide - (totalItems - idx);
-        for (var i = 0; i < it; i++) {
-          // append slides to end
-          if (e.direction == "left") {
-            $(".carousel-item")
-              .eq(i)
-              .appendTo(".carousel-inner");
-          } else {
-            $(".carousel-item")
-              .eq(0)
-              .appendTo($(this).find(".carousel-inner"));
-          }
-        }
-      }
-    });
-  });
+var
+a= "";
+var i;
+
+for (i = 0; i < file.data.length; i++) {
+if (i==0) {
+a+=
+"<div class='carousel-item col-md-4 active'>"+
+"<div class='card'>"+
+"<img class='card-img-top img-fluid' src='http://"+file.data[i].imagePath+"'alt='Card image cap'>"+
+"<div class='card-body'>"+
+  "<h4 class='card-title'>"+ file.data[i].label + "</h4>"+
+  "<p class='card-text'>"+ file.data[i].description +"</p>"+
+  "<p class='card-text'><small class='text-muted'>Last updated 3 mins ago</small></p>"+
+"</div>"+
+"</div>"+
+"</div>";
+}
+else{
+a+=
+"<div class='carousel-item col-md-4'>"+
+"<div class='card'>"+
+"<img class='card-img-top img-fluid' src='http://"+file.data[i].imagePath+"'alt='Card image cap'>"+
+"<div class='card-body'>"+
+  "<h4 class='card-title'>"+ file.data[i].label + "</h4>"+
+  "<p class='card-text'>"+ file.data[i].description +"</p>"+
+  "<p class='card-text'><small class='text-muted'>Last updated 3 mins ago</small></p>"+
+"</div>"+
+"</div>"+
+"</div>";
+}
+document.getElementById("demo").innerHTML= a;
+}
+
+
+});
+
  
   var slideIndex = 0;
   showSlides();
